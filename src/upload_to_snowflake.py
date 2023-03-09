@@ -182,6 +182,7 @@ if __name__ == "__main__":
             pwd=os.getenv('SF_PWD'),
             account=os.getenv('SF_ACCOUNT'),
             role=os.getenv('SF_ROLE'),
+            warehouse=os.getenv('SF_WAREHOUSE'),
             keep_alive=False
             )
     # upload data from H&M Dataset
