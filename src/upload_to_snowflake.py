@@ -16,6 +16,8 @@ from datetime import datetime
 import tempfile
 from snowflake_client import SnowflakeClient
 # load envs
+# dotenv_path = os.path.join(os.path.dirname(__file__), 'local.env')
+# load_dotenv(dotenv_path,verbose=True)
 load_dotenv(verbose=True)
 
 
@@ -182,13 +184,14 @@ if __name__ == "__main__":
             pwd=os.getenv('SF_PWD'),
             account=os.getenv('SF_ACCOUNT'),
             role=os.getenv('SF_ROLE'),
+            warehouse=os.getenv('SF_WAREHOUSE'),
             keep_alive=False
             )
     # upload data from H&M Dataset
-    upload_data_to_snowflake(
-        snowflake_client=sf_client,
-        snowflake_db='EXPLORATION_DB', # change this with your own DB if you wish
-        snowflake_schema='HM_RAW',
-        snowflake_tables=['articles', 'customers', 'transactions_train', 'images_to_s3'],
-        data_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
-    )
+    # upload_data_to_snowflake(
+    #     snowflake_client=sf_client,
+    #     snowflake_db='EXPLORATION_DB', # change this with your own DB if you wish
+    #     snowflake_schema='HM_RAW',
+    #     snowflake_tables=['articles', 'customers', 'transactions_train', 'images_to_s3'],
+    #     data_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
+    # )
