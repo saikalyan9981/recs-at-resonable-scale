@@ -152,3 +152,5 @@ metaflow.s3*/
 train/
 valid/
 test/
+src/dbt/profiles.yml
+dbt.log.*
