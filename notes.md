@@ -36,6 +36,7 @@ Use public H&M dataset with offline training and offline serving reccomendation 
 
 * DataOps: dbt builds DAG of transformations from SQL queries, allowing to run queries of millions of rows leveraging scalability of compute of modern data warehouses.
 
+
 # Deploying Infrastructure for Metaflow
 
 
@@ -52,6 +53,45 @@ Use public H&M dataset with offline training and offline serving reccomendation 
 
 What to add in profiles.yml? [TODO]
 
+```
+nvidia-snowflake:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "mjcivuj-wd85146"
+
+      # User/password auth
+      user: "saikalyan9981"
+      password: "--"
+
+      role: "ACCOUNTADMIN"
+      database: "EXPLORATION_DB"
+      warehouse: "COMPUTE_WH"
+      schema: "HM_POST"
+      threads: 1
+      client_session_keep_alive: False
+      query_tag: "Recsys"
+
+      # optional
+      connect_retries: 0 # default 0
+      connect_timeout: 10 # default: 10
+      retry_on_database_errors: False # default: false 
+      retry_all: False  # default: false
+```
+
 * Checking out video ![Post modern Data Stack](https://www.youtube.com/watch?v=5kHDb-XGHtc&ab_channel=JacopoTagliabue)
 * dbt -d  run --profiles-dir ./ (needde to pass profiles.ymlk directory if it's not in home)
-* assertion error too many messages received before intialisation
+* assertion error too many messages received before intialisation (change to python 3.9 and it's working now)
+* Schema.yml is representing the flow?
+    * artciles_staging,  customers_staging, transactions_staging - M ap data in json to fully flat structure
+    * image_staging - S3 url of products with naming convention ??
+    * articles_metadata - join metadata with image url to get full product metadata 
+    * dedup_transactions - for each user and article keep the last purchase
+    * joined_datafrtame - join the dedup purchases with articles and customers metadata
+    * filtered_dataframe - filter to a final datasets in which users have at least 5 training set purchases.
+
+
+# Run the flow:
+AWS_PROFILE="Sai Kalyan Siddanatham" python my_merlin_flow.py run --max-workers 1 --with card
+
